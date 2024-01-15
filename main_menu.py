@@ -2,10 +2,12 @@ import tkinter as tk
 
 
 class MainMenu:
-    def __init__(self, frame):
-        self.frame = frame
+    def __init__(self, menu_frame, instructions_frame):
+        self.main_menu_frame = menu_frame
+        self.instructions_frame = instructions_frame
 
         app_name_label = tk.Label(
+            self.main_menu_frame,
             text="Typing Speed Test",
             bg="#78C0E9",
             fg="#E28596",
@@ -16,16 +18,33 @@ class MainMenu:
         )
 
         start_game_button = tk.Button(
-            text="Start Game", bg="#70B2A5", font=("arial", 16, "bold")
+            self.main_menu_frame,
+            text="Start Game",
+            bg="#70B2A5",
+            font=("arial", 16, "bold"),
+            width=10,
         )
         start_game_button.grid(row=1, column=6)
 
         instructions_button = tk.Button(
-            text="Instructions", bg="#9C7DB8", font=("arial", 16, "bold")
+            self.main_menu_frame,
+            text="Instructions",
+            bg="#9C7DB8",
+            font=("arial", 16, "bold"),
+            command=self.open_instructions,
+            width=10,
         )
         instructions_button.grid(row=1, column=11)
 
         high_scores_button = tk.Button(
-            text="High Scores", bg="#8794d4", font=("arial", 16, "bold")
+            self.main_menu_frame,
+            text="High Scores",
+            bg="#8794d4",
+            font=("arial", 16, "bold"),
+            width=10,
         )
         high_scores_button.grid(row=1, column=16)
+
+    def open_instructions(self):
+        self.main_menu_frame.grid_remove()
+        self.instructions_frame.grid(row=0, column=0)
