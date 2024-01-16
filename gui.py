@@ -46,4 +46,6 @@ class TypingSpeedTest:
             self.instructions_frame, self.main_menu_frame
         )
 
-        self.game_page = GamePage(self.game_page_frame, self.main_menu_frame)
+        self.game_page = GamePage(
+            self.game_page_frame, self.main_menu_frame, self.master
+        )

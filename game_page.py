@@ -2,22 +2,24 @@ import tkinter as tk
 
 
 class GamePage:
-    def __init__(self, game_page, menu_frame):
+    def __init__(self, game_page, menu_frame, application_window):
         self.game_page_frame = game_page
         self.main_menu_frame = menu_frame
+        self.application_window = application_window
         self.cpm = 0
         self.wpm = 0
         self.mistakes = 0
         self.seconds_left = 60
+        self.timer_started = False
 
         self.timer = tk.Label(
             self.game_page_frame,
-            text=f"{self.seconds_left}",
+            text=self.seconds_left,
             bg="#78C0E9",
             fg="#E28596",
             font=("arial", 60, "bold"),
         )
-        self.timer.grid(row=0, column=10, pady=(30,0))
+        self.timer.grid(row=0, column=10, pady=(30, 0))
 
         self.current_cpm = tk.Label(
             self.game_page_frame,
@@ -81,9 +83,26 @@ class GamePage:
         )
         self.game_back_button.grid(row=4, column=10)
 
+        self.application_window.bind("<KeyPress>", self.key_press)
+
     def remove_temp_text(self, event):
         self.text_entry.delete(0, "end")
 
     def open_main_menu(self):
         self.game_page_frame.grid_remove()
         self.main_menu_frame.grid(row=0, column=0)
+
+    def key_press(self, event):
+        if self.application_window.focus_get() == self.text_entry:
+            self.handle_timer()
+
+    def handle_timer(self):
+        if not self.timer_started:
+            self.timer_started = True
+            self.application_window.after(1000, self.lower_timer)
+
+    def lower_timer(self):
+        self.seconds_left -= 1
+        self.timer.config(text=self.seconds_left)
+        if self.seconds_left > 0:
+            self.application_window.after(1000, self.lower_timer)
