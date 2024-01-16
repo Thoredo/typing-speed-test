@@ -1,11 +1,13 @@
 import tkinter as tk
+from word_generator import WordGenerator
 
 
 class MainMenu:
-    def __init__(self, menu_frame, instructions_frame, game_frame):
+    def __init__(self, menu_frame, instructions_frame, game_frame, game_instance):
         self.main_menu_frame = menu_frame
         self.instructions_frame = instructions_frame
         self.active_game_frame = game_frame
+        self.game_instance = game_instance
 
         app_name_label = tk.Label(
             self.main_menu_frame,
@@ -53,4 +55,23 @@ class MainMenu:
 
     def start_game(self):
         self.main_menu_frame.grid_remove()
+        self.change_example_text()
         self.active_game_frame.grid(row=0, column=0)
+
+    def fill_word_list(self):
+        final_string = ""
+        word_generator = WordGenerator()
+        for _ in range(100):
+            new_word = word_generator.add_word()
+            final_string = final_string + new_word + " "
+        return final_string
+
+    def change_example_text(self):
+        new_example_text = self.fill_word_list()
+        self.game_instance.example_text_window.config(state=tk.NORMAL)
+        self.game_instance.example_text_window.delete("1.0", tk.END)
+        self.game_instance.example_text_window.insert(
+            tk.END,
+            new_example_text,
+        )
+        self.game_instance.example_text_window.config(state=tk.DISABLED)

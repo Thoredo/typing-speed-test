@@ -36,16 +36,20 @@ class TypingSpeedTest:
         # Active game frame
         self.game_page_frame = tk.Frame(self.master, bg="#78C0E9")
 
+        # Game Page instance
+        self.game_page = GamePage(
+            self.game_page_frame, self.main_menu_frame, self.master
+        )
+
         # Main menu instance
         self.main_menu = MainMenu(
-            self.main_menu_frame, self.instructions_frame, self.game_page_frame
+            self.main_menu_frame,
+            self.instructions_frame,
+            self.game_page_frame,
+            self.game_page,
         )
 
         # Instructions instance
         self.instructions_page = InstructionsPage(
             self.instructions_frame, self.main_menu_frame
-        )
-
-        self.game_page = GamePage(
-            self.game_page_frame, self.main_menu_frame, self.master
         )
