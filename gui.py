@@ -1,6 +1,7 @@
 import tkinter as tk
 from main_menu import MainMenu
 from instructions_page import InstructionsPage
+from game_page import GamePage
 
 
 class TypingSpeedTest:
@@ -32,10 +33,17 @@ class TypingSpeedTest:
         # Instructions frame
         self.instructions_frame = tk.Frame(self.master, bg="#78C0E9")
 
+        # Active game frame
+        self.game_page_frame = tk.Frame(self.master, bg="#78C0E9")
+
         # Main menu instance
-        self.main_menu = MainMenu(self.main_menu_frame, self.instructions_frame)
+        self.main_menu = MainMenu(
+            self.main_menu_frame, self.instructions_frame, self.game_page_frame
+        )
 
         # Instructions instance
         self.instructions_page = InstructionsPage(
             self.instructions_frame, self.main_menu_frame
         )
+
+        self.game_page = GamePage(self.game_page_frame, self.main_menu_frame)
