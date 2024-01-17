@@ -120,6 +120,8 @@ class GamePage:
             return
         if character_pressed == self.example_text[self.text_index]:
             self.color_letter("green")
+            self.correct_characters += 1
+            self.update_cpm()
             self.text_index += 1
         else:
             self.color_letter("red")
@@ -141,3 +143,12 @@ class GamePage:
             if fg == "red":
                 self.mistakes -= 1
         self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
+
+    def update_cpm(self):
+        time_elapsed = 60 - self.seconds_left
+        if time_elapsed > 0:
+            self.cpm = (self.correct_characters / time_elapsed) * 60
+            self.current_cpm.config(text=f"CPM: {int(self.cpm)}")
+        else:
+            self.cpm = self.correct_characters * 60
+            self.current_cpm.config(text=f"CPM: {int(self.cpm)}")
