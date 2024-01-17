@@ -13,6 +13,7 @@ class GamePage:
         self.seconds_left = 60
         self.timer_started = False
         self.text_index = 0
+        self.correct_characters_indexes = set()
 
         self.timer = tk.Label(
             self.game_page_frame,
@@ -109,15 +110,22 @@ class GamePage:
         # Get the text in the example window
         self.example_text = self.example_text_window.get("1.0", tk.END)
 
+        # Handle user pressing spacebar
         if character_pressed == "space" and self.example_text[self.text_index] == " ":
             self.text_index += 1
             return
+
+        # Handle user pressing backspace
         if character_pressed == "BackSpace":
             self.handle_backspace()
             return
+
+        # Handle user pressing letters
         if character_pressed == self.example_text[self.text_index]:
             self.color_letter("green")
-            self.correct_characters += 1
+            if self.text_index not in self.correct_characters_indexes:
+                self.correct_characters += 1
+                self.correct_characters_indexes.add(self.text_index)
             self.update_cpm()
             self.text_index += 1
         else:
@@ -158,12 +166,4 @@ class GamePage:
         if self.text_index > 0:
             self.text_index -= 1
         self.update_mistakes("backspace")
-        try:
-            # get color of character we are removing
-            fg = self.example_text_window.tag_cget(self.text_index, "foreground")
-            if fg == "green":
-                self.correct_characters -= 1
-                self.update_cpm()
-        except tk.TclError as e:
-            print(f"TclError: {e}, 'spacebar' getting removed")
         self.example_text_window.tag_delete(self.text_index)
