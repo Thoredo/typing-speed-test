@@ -127,11 +127,13 @@ class GamePage:
                 self.correct_characters += 1
                 self.correct_characters_indexes.add(self.text_index)
             self.update_cpm()
+            self.update_wpm()
             self.text_index += 1
         else:
             self.color_letter("red")
             self.update_mistakes("mistake")
             self.update_cpm()
+            self.update_wpm()
             self.text_index += 1
 
     def color_letter(self, color):
@@ -167,3 +169,7 @@ class GamePage:
             self.text_index -= 1
         self.update_mistakes("backspace")
         self.example_text_window.tag_delete(self.text_index)
+
+    def update_wpm(self):
+        self.wpm = self.cpm / 5
+        self.current_wpm.config(text=f"WPM: {int(self.wpm)}")
