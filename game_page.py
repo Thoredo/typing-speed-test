@@ -145,8 +145,6 @@ class GamePage:
         self.example_text_window.tag_config(self.text_index, foreground=color)
 
     def update_mistakes(self, reason):
-        if self.text_index == 0:
-            return
         if reason == "mistake":
             self.mistakes += 1
         elif reason == "backspace":
@@ -156,7 +154,7 @@ class GamePage:
                 if fg == "red":
                     self.mistakes -= 1
             except tk.TclError as e:
-                print(f"TclError: {e}, 'spacebar' getting removed")
+                print(f"TclError: {e}")
         self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
 
     def update_cpm(self):
