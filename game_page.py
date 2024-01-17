@@ -7,6 +7,7 @@ class GamePage:
         self.main_menu_frame = menu_frame
         self.application_window = application_window
         self.cpm = 0
+        self.correct_characters = 0
         self.wpm = 0
         self.mistakes = 0
         self.seconds_left = 60
@@ -116,10 +117,12 @@ class GamePage:
             self.example_text_window.tag_delete(self.text_index)
             return
         if character_pressed == self.example_text[self.text_index]:
-            self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
-            self.example_text_window.tag_config(self.text_index, foreground="green")
+            self.color_letter("green")
             self.text_index += 1
         else:
-            self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
-            self.example_text_window.tag_config(self.text_index, foreground="red")
+            self.color_letter("red")
             self.text_index += 1
+
+    def color_letter(self, color):
+        self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
+        self.example_text_window.tag_config(self.text_index, foreground=color)
