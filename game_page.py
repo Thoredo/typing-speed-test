@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 
 class GamePage:
@@ -105,6 +106,8 @@ class GamePage:
         self.timer.config(text=self.seconds_left)
         if self.seconds_left > 0:
             self.application_window.after(1000, self.lower_timer)
+        if self.seconds_left == 0:
+            self.time_up()
 
     def check_input(self, character_pressed):
         # Get the text in the example window
@@ -173,3 +176,13 @@ class GamePage:
     def update_wpm(self):
         self.wpm = self.cpm / 5
         self.current_wpm.config(text=f"WPM: {int(self.wpm)}")
+
+    def time_up(self):
+        messagebox.showinfo(
+            "Time Up!",
+            "Time is up, here are your stats:\n"
+            f"Mistakes: {self.mistakes}\n"
+            f"CPM: {int(self.cpm)}\n"
+            f"WPM: {int(self.wpm)}\n",
+        )
+        self.open_main_menu()
