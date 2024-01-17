@@ -11,7 +11,7 @@ class GamePage:
         self.mistakes = 0
         self.seconds_left = 60
         self.timer_started = False
-        self.example_text = ""
+        self.text_index = 0
 
         self.timer = tk.Label(
             self.game_page_frame,
@@ -91,6 +91,7 @@ class GamePage:
     def key_press(self, event):
         if self.application_window.focus_get() == self.text_entry:
             self.handle_timer()
+            self.check_input(event.keysym)
 
     def handle_timer(self):
         if not self.timer_started:
@@ -102,3 +103,23 @@ class GamePage:
         self.timer.config(text=self.seconds_left)
         if self.seconds_left > 0:
             self.application_window.after(1000, self.lower_timer)
+
+    def check_input(self, character_pressed):
+        # Get the text in the example window
+        self.example_text = self.example_text_window.get("1.0", tk.END)
+
+        if character_pressed == "space" and self.example_text[self.text_index] == " ":
+            self.text_index += 1
+            return
+        if character_pressed == "BackSpace":
+            self.text_index -= 1
+            self.example_text_window.tag_delete(self.text_index)
+            return
+        if character_pressed == self.example_text[self.text_index]:
+            self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
+            self.example_text_window.tag_config(self.text_index, foreground="green")
+            self.text_index += 1
+        else:
+            self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
+            self.example_text_window.tag_config(self.text_index, foreground="red")
+            self.text_index += 1
