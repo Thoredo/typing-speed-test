@@ -126,6 +126,7 @@ class GamePage:
         else:
             self.color_letter("red")
             self.update_mistakes("mistake")
+            self.update_cpm()
             self.text_index += 1
 
     def color_letter(self, color):
@@ -138,10 +139,13 @@ class GamePage:
         if reason == "mistake":
             self.mistakes += 1
         elif reason == "backspace":
-            # get color of character we are removing
-            fg = self.example_text_window.tag_cget(self.text_index, "foreground")
-            if fg == "red":
-                self.mistakes -= 1
+            try:
+                # get color of character we are removing
+                fg = self.example_text_window.tag_cget(self.text_index, "foreground")
+                if fg == "red":
+                    self.mistakes -= 1
+            except tk.TclError as e:
+                print(f"TclError: {e}, 'spacebar' getting removed")
         self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
 
     def update_cpm(self):
