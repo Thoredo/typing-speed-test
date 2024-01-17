@@ -89,6 +89,7 @@ class GamePage:
 
     def open_main_menu(self):
         self.game_page_frame.grid_remove()
+        self.reset_game()
         self.main_menu_frame.grid(row=0, column=0)
 
     def key_press(self, event):
@@ -99,13 +100,13 @@ class GamePage:
     def handle_timer(self):
         if not self.timer_started:
             self.timer_started = True
-            self.application_window.after(1000, self.lower_timer)
+            self.active_timer = self.application_window.after(1000, self.lower_timer)
 
     def lower_timer(self):
         self.seconds_left -= 1
         self.timer.config(text=self.seconds_left)
         if self.seconds_left > 0:
-            self.application_window.after(1000, self.lower_timer)
+            self.active_timer = self.application_window.after(1000, self.lower_timer)
         if self.seconds_left == 0:
             self.time_up()
 
@@ -186,3 +187,29 @@ class GamePage:
             f"WPM: {int(self.wpm)}\n",
         )
         self.open_main_menu()
+
+    def reset_game(self):
+        # Stop the timer
+        self.application_window.after_cancel(self.active_timer)
+
+        # Reset variables
+        self.cpm = 0
+        self.correct_characters = 0
+        self.wpm = 0
+        self.mistakes = 0
+        self.seconds_left = 60
+        self.timer_started = False
+        self.text_index = 0
+        self.correct_characters_indexes = set()
+
+        # Reset labels
+        self.timer.config(text=self.seconds_left)
+        self.current_cpm.config(text=f"CPM: {self.cpm}")
+        self.current_wpm.config(text=f"WPM: {self.wpm}")
+        self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
+
+        # Clear example_text_window
+        self.example_text_window.delete("1.0", tk.END)
+
+        # Clear text entry
+        self.text_entry.delete(0, "end")
