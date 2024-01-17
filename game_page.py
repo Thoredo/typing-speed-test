@@ -113,7 +113,9 @@ class GamePage:
             self.text_index += 1
             return
         if character_pressed == "BackSpace":
-            self.text_index -= 1
+            if self.text_index > 0:
+                self.text_index -= 1
+            self.update_mistakes("backspace")
             self.example_text_window.tag_delete(self.text_index)
             return
         if character_pressed == self.example_text[self.text_index]:
@@ -121,8 +123,21 @@ class GamePage:
             self.text_index += 1
         else:
             self.color_letter("red")
+            self.update_mistakes("mistake")
             self.text_index += 1
 
     def color_letter(self, color):
         self.example_text_window.tag_add(self.text_index, f"1.{self.text_index}")
         self.example_text_window.tag_config(self.text_index, foreground=color)
+
+    def update_mistakes(self, reason):
+        if self.text_index == 0:
+            return
+        if reason == "mistake":
+            self.mistakes += 1
+        elif reason == "backspace":
+            # get color of character we are removing
+            fg = self.example_text_window.tag_cget(self.text_index, "foreground")
+            if fg == "red":
+                self.mistakes -= 1
+        self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
