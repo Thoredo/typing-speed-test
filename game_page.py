@@ -113,10 +113,7 @@ class GamePage:
             self.text_index += 1
             return
         if character_pressed == "BackSpace":
-            if self.text_index > 0:
-                self.text_index -= 1
-            self.update_mistakes("backspace")
-            self.example_text_window.tag_delete(self.text_index)
+            self.handle_backspace()
             return
         if character_pressed == self.example_text[self.text_index]:
             self.color_letter("green")
@@ -149,10 +146,24 @@ class GamePage:
         self.current_mistakes.config(text=f"Mistakes: {self.mistakes}")
 
     def update_cpm(self):
-        time_elapsed = 60 - self.seconds_left
-        if time_elapsed > 0:
-            self.cpm = (self.correct_characters / time_elapsed) * 60
+        self.time_elapsed = 60 - self.seconds_left
+        if self.time_elapsed > 0:
+            self.cpm = (self.correct_characters / self.time_elapsed) * 60
             self.current_cpm.config(text=f"CPM: {int(self.cpm)}")
         else:
             self.cpm = self.correct_characters * 60
             self.current_cpm.config(text=f"CPM: {int(self.cpm)}")
+
+    def handle_backspace(self):
+        if self.text_index > 0:
+            self.text_index -= 1
+        self.update_mistakes("backspace")
+        try:
+            # get color of character we are removing
+            fg = self.example_text_window.tag_cget(self.text_index, "foreground")
+            if fg == "green":
+                self.correct_characters -= 1
+                self.update_cpm()
+        except tk.TclError as e:
+            print(f"TclError: {e}, 'spacebar' getting removed")
+        self.example_text_window.tag_delete(self.text_index)
