@@ -3,11 +3,19 @@ from word_generator import WordGenerator
 
 
 class MainMenu:
-    def __init__(self, menu_frame, instructions_frame, game_frame, game_instance):
+    def __init__(
+        self,
+        menu_frame,
+        instructions_frame,
+        game_frame,
+        game_instance,
+        highscores_frame,
+    ):
         self.main_menu_frame = menu_frame
         self.instructions_frame = instructions_frame
         self.active_game_frame = game_frame
         self.game_instance = game_instance
+        self.highscores_frame = highscores_frame
 
         app_name_label = tk.Label(
             self.main_menu_frame,
@@ -46,6 +54,7 @@ class MainMenu:
             bg="#8794d4",
             font=("arial", 16, "bold"),
             width=10,
+            command=self.open_highscores,
         )
         high_scores_button.grid(row=1, column=16)
 
@@ -75,3 +84,7 @@ class MainMenu:
             new_example_text,
         )
         self.game_instance.example_text_window.config(state=tk.DISABLED)
+
+    def open_highscores(self):
+        self.main_menu_frame.grid_remove()
+        self.highscores_frame.grid(row=0, column=0)

@@ -2,6 +2,7 @@ import tkinter as tk
 from main_menu import MainMenu
 from instructions_page import InstructionsPage
 from game_page import GamePage
+from highscores import Highscores
 
 
 class TypingSpeedTest:
@@ -36,6 +37,14 @@ class TypingSpeedTest:
         # Active game frame
         self.game_page_frame = tk.Frame(self.master, bg="#78C0E9")
 
+        # Highscores frame
+        self.highscores_frame = tk.Frame(self.master, bg="#78C0E9")
+
+        # Higscores instance
+        self.highscores_instance = Highscores(
+            self.highscores_frame, self.main_menu_frame
+        )
+
         # Game Page instance
         self.game_page = GamePage(
             self.game_page_frame, self.main_menu_frame, self.master
@@ -47,6 +56,7 @@ class TypingSpeedTest:
             self.instructions_frame,
             self.game_page_frame,
             self.game_page,
+            self.highscores_frame,
         )
 
         # Instructions instance
