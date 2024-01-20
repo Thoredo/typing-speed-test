@@ -47,7 +47,10 @@ class TypingSpeedTest:
 
         # Game Page instance
         self.game_page = GamePage(
-            self.game_page_frame, self.main_menu_frame, self.master
+            self.game_page_frame,
+            self.main_menu_frame,
+            self.master,
+            self.highscores_instance,
         )
 
         # Main menu instance
@@ -56,7 +59,7 @@ class TypingSpeedTest:
             self.instructions_frame,
             self.game_page_frame,
             self.game_page,
-            self.highscores_frame,
+            self.highscores_instance,
         )
 
         # Instructions instance
