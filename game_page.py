@@ -15,6 +15,7 @@ class GamePage:
         self.timer_started = False
         self.text_index = 0
         self.correct_characters_indexes = set()
+        self.active_timer = None
 
         self.timer = tk.Label(
             self.game_page_frame,
@@ -187,8 +188,9 @@ class GamePage:
         self.open_main_menu()
 
     def reset_game(self):
-        # Stop the timer
-        self.application_window.after_cancel(self.active_timer)
+        # Stop the timer if its active
+        if self.active_timer is not None:
+            self.application_window.after_cancel(self.active_timer)
 
         # Reset variables
         self.cpm = 0
