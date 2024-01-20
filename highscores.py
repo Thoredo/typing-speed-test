@@ -74,6 +74,8 @@ class Highscores:
 
         self.highscores_list = json.loads(file_contents)
 
+        self.ranking_widgets = []
+
         for score in self.highscores_list:
             self.new_rank = tk.Label(
                 self.highscores_frame,
@@ -83,6 +85,7 @@ class Highscores:
                 font=("arial", 12, "bold"),
             )
             self.new_rank.grid(row=score["rank"], column=0, pady=(10, 0))
+            self.ranking_widgets.append(self.new_rank)
 
             self.new_name = tk.Label(
                 self.highscores_frame,
@@ -92,6 +95,7 @@ class Highscores:
                 font=("arial", 12, "bold"),
             )
             self.new_name.grid(row=score["rank"], column=1, pady=(10, 0), padx=(100, 0))
+            self.ranking_widgets.append(self.new_name)
 
             self.new_date = tk.Label(
                 self.highscores_frame,
@@ -101,6 +105,7 @@ class Highscores:
                 font=("arial", 12, "bold"),
             )
             self.new_date.grid(row=score["rank"], column=2, pady=(10, 0), padx=(100, 0))
+            self.ranking_widgets.append(self.new_date)
 
             self.new_wpm = tk.Label(
                 self.highscores_frame,
@@ -110,6 +115,7 @@ class Highscores:
                 font=("arial", 12, "bold"),
             )
             self.new_wpm.grid(row=score["rank"], column=3, pady=(10, 0), padx=(100, 0))
+            self.ranking_widgets.append(self.new_wpm)
 
             self.new_mistakes = tk.Label(
                 self.highscores_frame,
@@ -121,3 +127,8 @@ class Highscores:
             self.new_mistakes.grid(
                 row=score["rank"], column=4, pady=(10, 0), padx=(100, 0)
             )
+            self.ranking_widgets.append(self.new_mistakes)
+
+    def clear_rank_widgets(self):
+        for widget in self.ranking_widgets:
+            widget.destroy()

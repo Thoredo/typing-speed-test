@@ -59,6 +59,7 @@ class TypingSpeedTest:
             self.instructions_frame,
             self.game_page_frame,
             self.game_page,
+            self.highscores_frame,
             self.highscores_instance,
         )
 

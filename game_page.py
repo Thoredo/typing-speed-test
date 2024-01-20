@@ -1,12 +1,18 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter.simpledialog import askstring
+from datetime import datetime
+import json
+import copy
 
 
 class GamePage:
-    def __init__(self, game_page, menu_frame, application_window):
+    def __init__(self, game_page, menu_frame, application_window, highscores_instance):
         self.game_page_frame = game_page
         self.main_menu_frame = menu_frame
         self.application_window = application_window
+        self.highscores_instance = highscores_instance
+
         self.cpm = 0
         self.correct_characters = 0
         self.wpm = 0
@@ -185,6 +191,7 @@ class GamePage:
             f"CPM: {int(self.cpm)}\n"
             f"WPM: {int(self.wpm)}\n",
         )
+        self.check_highscore()
         self.open_main_menu()
 
     def reset_game(self):
@@ -213,3 +220,42 @@ class GamePage:
 
         # Clear text entry
         self.text_entry.delete(0, "end")
+
+    def check_highscore(self):
+        self.highscores_list = self.highscores_instance.highscores_list
+        rank_15_score = self.highscores_list[14]["wpm"]
+        if int(self.wpm) > rank_15_score:
+            self.update_highscore()
+
+    def update_highscore(self):
+        player_name = askstring(
+            "New highscore!", "You got a highscore, please enter your name"
+        )
+        current_datetime = datetime.now()
+        formatted_day = current_datetime.strftime("%d-%m-%Y")
+
+        for rank in self.highscores_list:
+            if int(self.wpm) > rank["wpm"]:
+                self.move_lower_score(rank["rank"] - 1)
+                self.highscores_list[rank["rank"] - 1]["name"] = player_name
+                self.highscores_list[rank["rank"] - 1]["date"] = formatted_day
+                self.highscores_list[rank["rank"] - 1]["wpm"] = int(self.wpm)
+                self.highscores_list[rank["rank"] - 1]["mistakes"] = self.mistakes
+                with open("highscores.json", "w") as outfile:
+                    json.dump(self.highscores_list, outfile)
+                return
+
+    def move_lower_score(self, updated_rank):
+        lower_scores = copy.deepcopy(self.highscores_list[updated_rank:-1])
+
+        index = 0
+
+        for score in lower_scores:
+            self.highscores_list[score["rank"]]["name"] = lower_scores[index]["name"]
+            self.highscores_list[score["rank"]]["date"] = lower_scores[index]["date"]
+            self.highscores_list[score["rank"]]["wpm"] = lower_scores[index]["wpm"]
+            self.highscores_list[score["rank"]]["mistakes"] = lower_scores[index][
+                "mistakes"
+            ]
+
+            index += 1

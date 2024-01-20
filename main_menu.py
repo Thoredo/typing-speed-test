@@ -10,12 +10,14 @@ class MainMenu:
         game_frame,
         game_instance,
         highscores_frame,
+        highscores_instance,
     ):
         self.main_menu_frame = menu_frame
         self.instructions_frame = instructions_frame
         self.active_game_frame = game_frame
         self.game_instance = game_instance
         self.highscores_frame = highscores_frame
+        self.highscores_instance = highscores_instance
 
         app_name_label = tk.Label(
             self.main_menu_frame,
@@ -87,4 +89,6 @@ class MainMenu:
 
     def open_highscores(self):
         self.main_menu_frame.grid_remove()
+        self.highscores_instance.clear_rank_widgets()
+        self.highscores_instance.show_highscores()
         self.highscores_frame.grid(row=0, column=0)
