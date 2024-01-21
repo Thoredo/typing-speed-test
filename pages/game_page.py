@@ -63,7 +63,7 @@ class GamePage:
             self.game_page_frame,
             borderwidth=5,
             height=7,
-            width=80,
+            width=77,
             bg="#78C0E9",
             fg="#E28596",
             font=("arial", 14, "bold"),
