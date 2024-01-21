@@ -1,8 +1,8 @@
 import tkinter as tk
-from main_menu import MainMenu
-from instructions_page import InstructionsPage
-from game_page import GamePage
-from highscores import Highscores
+from pages.main_menu import MainMenu
+from pages.instructions_page import InstructionsPage
+from pages.game_page import GamePage
+from pages.highscores import Highscores
 
 
 class TypingSpeedTest:

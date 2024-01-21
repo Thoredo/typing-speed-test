@@ -69,7 +69,7 @@ class Highscores:
         self.main_menu_frame.grid(row=0, column=0)
 
     def show_highscores(self):
-        with open("highscores.json") as file:
+        with open("./data/highscores.json") as file:
             file_contents = file.read()
 
         self.highscores_list = json.loads(file_contents)

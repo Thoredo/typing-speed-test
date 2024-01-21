@@ -241,7 +241,7 @@ class GamePage:
                 self.highscores_list[rank["rank"] - 1]["date"] = formatted_day
                 self.highscores_list[rank["rank"] - 1]["wpm"] = int(self.wpm)
                 self.highscores_list[rank["rank"] - 1]["mistakes"] = self.mistakes
-                with open("highscores.json", "w") as outfile:
+                with open("./data/highscores.json", "w") as outfile:
                     json.dump(self.highscores_list, outfile)
                 return
 

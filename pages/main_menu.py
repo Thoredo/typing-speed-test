@@ -1,5 +1,9 @@
 import tkinter as tk
-from word_generator import WordGenerator
+import sys
+
+sys.path.insert(1, "./data/")
+
+from data.word_generator import WordGenerator
 
 
 class MainMenu:
