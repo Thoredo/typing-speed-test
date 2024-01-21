@@ -2,7 +2,26 @@ import tkinter as tk
 
 
 class InstructionsPage:
+    """
+    Represents the instructions page of the Typing Speed Test application.
+
+    Attributes
+    ----------
+    instructions_frame(tk.Frame): The frame for displaying instructions.
+    main_menu_frame(tk.Frame): The main menu frame.
+    test_label(tk.Label): A label displaying instructions for using the typing speed test app.
+    back_button(tk.Button): A button to navigate back to the main menu.
+    """
+
     def __init__(self, instruction_frame, menu_frame):
+        """
+        Initializes the InstructionsPage class.
+
+        Parameters
+        ----------
+        instruction_frame(tk.Frame): The frame for displaying instructions.
+        menu_frame(tk.Frame): The main menu frame.
+        """
         self.instructions_frame = instruction_frame
         self.main_menu_frame = menu_frame
         self.test_label = tk.Label(
@@ -34,5 +53,8 @@ class InstructionsPage:
         self.back_button.grid(row=1, column=10)
 
     def open_main_menu(self):
+        """
+        Switches to the main menu frame and hides the instructions frame.
+        """
         self.instructions_frame.grid_remove()
         self.main_menu_frame.grid(row=0, column=0)

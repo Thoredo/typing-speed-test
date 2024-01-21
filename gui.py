@@ -12,6 +12,24 @@ class TypingSpeedTest:
     Attributes
     ----------
     master (tk.Tk): The main Tkinter window.
+
+    Frames
+    -------
+    main_menu_frame: Frame containing the main menu options.
+    instructions_frame: Frame displaying typing instructions.
+    game_page_frame: Frame for the active typing game.
+    highscores_frame: Frame displaying highscores.
+
+    Instances
+    -------
+    highscores_instance: An instance of the Highscores class, managing
+        highscores display and interactions.
+    game_page: An instance of the GamePage class, handling the active
+        typing game and interactions.
+    main_menu: An instance of the MainMenu class, providing the main menu
+        options and navigation.
+    instructions_page: An instance of the InstructionsPage class,
+        displaying typing instructions.
     """
 
     def __init__(self, master):

@@ -3,7 +3,32 @@ import json
 
 
 class Highscores:
+    """
+    Represents the high scores page of the Typing Speed Test application.
+
+    Attributes
+    ----------
+    highscores_frame(tk.Frame): The frame for displaying high scores.
+    main_menu_frame(tk.Frame): The main menu frame.
+    rank_label(tk.Label): A label indicating the rank column.
+    name_label(tk.Label): A label indicating the name column.
+    date_label(tk.Label): A label indicating the date column.
+    wpm_label(tk.Label): A label indicating the words per minute (WPM) column.
+    mistakes_label(tk.Label): A label indicating the mistakes column.
+    highscores_back_button(tk.Button): A button to navigate back to the main menu.
+    highscores_list(list): A list containing high scores loaded from the 'highscores.json' file.
+    ranking_widgets(list): A list to store widgets displaying high scores dynamically.
+    """
+
     def __init__(self, highscores_frame, menu_frame):
+        """
+        Initializes the Highscores class.
+
+        Parameters
+        ----------
+        highscores_frame(tk.Frame): The frame for displaying high scores.
+        menu_frame(tk.Frame): The main menu frame.
+        """
         self.highscores_frame = highscores_frame
         self.main_menu_frame = menu_frame
 
@@ -65,10 +90,16 @@ class Highscores:
         self.show_highscores()
 
     def open_main_menu(self):
+        """
+        Switches to the main menu frame and hides the high scores frame.
+        """
         self.highscores_frame.grid_remove()
         self.main_menu_frame.grid(row=0, column=0)
 
     def show_highscores(self):
+        """
+        Loads high scores from 'highscores.json' and dynamically displays them on the high scores frame.
+        """
         with open("./data/highscores.json") as file:
             file_contents = file.read()
 
@@ -76,6 +107,8 @@ class Highscores:
 
         self.ranking_widgets = []
 
+        # Create labels for all 15 scores, and add widgets to self.ranking_widgets
+        # to easily reset them when needed.
         for score in self.highscores_list:
             self.new_rank = tk.Label(
                 self.highscores_frame,
@@ -130,5 +163,8 @@ class Highscores:
             self.ranking_widgets.append(self.new_mistakes)
 
     def clear_rank_widgets(self):
+        """
+        Clears the dynamically displayed ranking widgets on the high scores frame.
+        """
         for widget in self.ranking_widgets:
             widget.destroy()

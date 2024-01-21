@@ -7,6 +7,19 @@ from data.word_generator import WordGenerator
 
 
 class MainMenu:
+    """
+    Represents the main menu of the Typing Speed Test app.
+
+    Attributes
+    ----------
+    main_menu_frame(tk.Frame): The main menu frame.
+    instructions_frame(tk.Frame): The frame for displaying instructions.
+    active_game_frame(tk.Frame): The frame for the active typing game.
+    game_instance(GamePage): An instance of the GamePage class.
+    highscores_frame(tk.Frame): The frame for displaying high scores.
+    highscores_instance(Highscores): An instance of the Highscores class.
+    """
+
     def __init__(
         self,
         menu_frame,
@@ -16,6 +29,18 @@ class MainMenu:
         highscores_frame,
         highscores_instance,
     ):
+        """
+        Initializes the MainMenu class.
+
+        Parameters
+        ----------
+        main_menu_frame(tk.Frame): The main menu frame.
+        instructions_frame(tk.Frame): The frame for displaying instructions.
+        active_game_frame(tk.Frame): The frame for the active typing game.
+        game_instance(GamePage): An instance of the GamePage class.
+        highscores_frame(tk.Frame): The frame for displaying high scores.
+        highscores_instance(Highscores): An instance of the Highscores class.
+        """
         self.main_menu_frame = menu_frame
         self.instructions_frame = instructions_frame
         self.active_game_frame = game_frame
@@ -65,15 +90,28 @@ class MainMenu:
         high_scores_button.grid(row=1, column=16)
 
     def open_instructions(self):
+        """
+        Switches to the instructions frame and hides the main menu frame.
+        """
         self.main_menu_frame.grid_remove()
         self.instructions_frame.grid(row=0, column=0)
 
     def start_game(self):
+        """
+        Switches to the active game frame, changes the example text, and hides the main menu frame.
+        """
         self.main_menu_frame.grid_remove()
         self.change_example_text()
         self.active_game_frame.grid(row=0, column=0)
 
     def fill_word_list(self):
+        """
+        Generates a string of 100 words using the WordGenerator class.
+
+        Returns
+        -------
+        final_string(str): A string containing 100 words.
+        """
         final_string = ""
         word_generator = WordGenerator()
         for _ in range(100):
@@ -82,6 +120,9 @@ class MainMenu:
         return final_string
 
     def change_example_text(self):
+        """
+        Changes the example text in the active game frame with a new set of words.
+        """
         new_example_text = self.fill_word_list()
         self.game_instance.example_text_window.config(state=tk.NORMAL)
         self.game_instance.example_text_window.delete("1.0", tk.END)
@@ -92,6 +133,9 @@ class MainMenu:
         self.game_instance.example_text_window.config(state=tk.DISABLED)
 
     def open_highscores(self):
+        """
+        Switches to the high scores frame, clears existing rank widgets, displays high scores, and hides the main menu frame.
+        """
         self.main_menu_frame.grid_remove()
         self.highscores_instance.clear_rank_widgets()
         self.highscores_instance.show_highscores()
